@@ -99,7 +99,7 @@ export const insertOrderSchema = z.object({
 });
 
 // Schema for inserting an order item
-export const inOrderItemSchema = z.object({
+export const insertOrderItemSchema = z.object({
   productId: z.string(),
   slug: z.string(),
   name: z.string(),
