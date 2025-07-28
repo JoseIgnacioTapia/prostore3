@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { getMyCart } from '@/lib/actions/cart.actions';
 import { getUserById } from '@/lib/actions/user.actions';
-import CheckoutSteps from '@/components/shared/checkout-steps';
+import CheckoutSteps from '@/components/shared/CheckoutSteps';
 import { ShippingAddress } from '@/types';
 import {
   Table,
@@ -18,8 +18,9 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { formatCurrency } from '@/lib/utils';
+import PlaceOrderForm from './PlaceOrderForm';
 
-export const metadata: Metadata = {
+export const metadata: MetaData = {
   title: 'Place Order',
 };
 
@@ -132,6 +133,7 @@ async function PlaceOrderPage() {
                 <div>Items</div>
                 <div>{formatCurrency(cart.totalPrice)}</div>
               </div>
+              <PlaceOrderForm />
             </CardContent>
           </Card>
         </div>
