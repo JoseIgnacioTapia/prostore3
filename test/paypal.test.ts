@@ -1,4 +1,4 @@
-import { generateAccessToken } from '@/lib/paypal';
+import { generateAccessToken, paypal } from '@/lib/paypal';
 
 // Test to generate access token from paypal
 test('generate token paypal', async () => {
@@ -8,5 +8,29 @@ test('generate token paypal', async () => {
   expect(tokenResponse.length).toBeGreaterThan(0);
 });
 
-console.log(process.env.PAYPAL_CLIENT_ID); // Debería mostrar tu ID
-console.log(process.env.PAYPAL_APP_SECRET); // Debería mostrar tu secreto
+// Test to create order with paypal
+test('creates a paypal order', async () => {
+  const token = await generateAccessToken();
+  const price = 10.0;
+
+  const orderResponse = await paypal.createOrder(price);
+  console.log(orderResponse);
+
+  expect(orderResponse).toHaveProperty('id');
+  expect(orderResponse).toHaveProperty('status');
+  expect(orderResponse.status).toBe('CREATED');
+});
+
+// Test to capture payment with mock order
+test('simulate capturing a payment from an order', async () => {
+  const orderId = '100';
+
+  const mockCapturePayment = jest
+    .spyOn(paypal, 'capturePayment')
+    .mockResolvedValue({ status: 'COMPLETED' });
+
+  const captureResponse = await paypal.capturePayment(orderId);
+  expect(captureResponse).toHaveProperty('status', 'COMPLETED');
+
+  mockCapturePayment.mockRestore();
+});
