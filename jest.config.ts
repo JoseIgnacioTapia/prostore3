@@ -196,6 +196,19 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+  testMatch: [
+    '**/__tests__/**/*.test.ts',
+    '**/__tests__/**/*.test.tsx',
+    '**/__tests__/**/*.test.js',
+    '**/__tests__/**/*.test.jsx',
+    '**/*.test.ts',
+    '**/*.test.tsx',
+    '**/*.test.js',
+    '**/*.test.jsx',
+  ],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+  },
 };
 
 export default config;
