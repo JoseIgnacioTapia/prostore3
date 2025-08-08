@@ -41,7 +41,7 @@ async function PlaceOrderPage() {
 
   return (
     <>
-      <CheckoutSteps current='3' />
+      <CheckoutSteps current={3} />
       <h1 className='py-4 text-2xl'>Place Order</h1>
       <div className='grid md:grid-cols-3 md:gap-'>
         <div className='md:col-span-2 overflow-x-auto space-y-4'>
