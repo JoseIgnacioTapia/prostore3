@@ -54,16 +54,17 @@ function OrderDetailsTable({
     let status = '';
 
     if (isPending) {
-      status = 'Loading PayPal script...';
+      status = 'Loading PayPal ...';
     } else if (isRejected) {
-      status = 'Failed to load PayPal script.';
+      status = 'Failed to load PayPal';
     }
 
     return status;
   };
 
-  const handleCreatePaypalOrder = async () => {
-    const res = await createPayPalOrder(id);
+  const handleCreatePayPalOrder = async () => {
+    const res = await createPayPalOrder(order.id);
+    console.log('PayPal Create Order Response:', res);
 
     if (!res.success) {
       toast({
@@ -77,6 +78,7 @@ function OrderDetailsTable({
 
   const handleApprovePayPalOrder = async (data: { orderID: string }) => {
     const res = await approvePayPalOrder(order.id, data);
+    console.log('PayPal Approve Order Response:', res);
 
     toast({
       variant: res.success ? 'default' : 'destructive',
@@ -177,7 +179,7 @@ function OrderDetailsTable({
                 <div>{formatCurrency(shippingPrice)}</div>
               </div>
               <div className='flex justify-between'>
-                <div>Items</div>
+                <div>Total</div>
                 <div>{formatCurrency(totalPrice)}</div>
               </div>
               {/* Paypal Payment */}
@@ -186,8 +188,8 @@ function OrderDetailsTable({
                   <PayPalScriptProvider options={{ clientId: paypalClientId }}>
                     <PrintLoadingState />
                     <PayPalButtons
-                      createOrder={handleCreatePaypalOrder}
-                      onApprove={handleApprovePaypalOrder}
+                      createOrder={handleCreatePayPalOrder}
+                      onApprove={handleApprovePayPalOrder}
                     />
                   </PayPalScriptProvider>
                 </div>
