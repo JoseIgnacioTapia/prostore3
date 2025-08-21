@@ -3,9 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Menu from '@/components/shared/header/menu';
 import MainNav from './MainNav';
-import { Input } from '@/components/ui/input';
 
-function AdminLayout({ children }: { children: React.ReactNode }) {
+function UserLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className='flex flex-col'>
@@ -21,13 +20,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
             </Link>
             <MainNav className='mx-6' />
             <div className='ml-auto items-center flex space-x-4'>
-              <div>
-                <Input
-                  type='search'
-                  placeholder='Search...'
-                  className='md:w-[100px] lg:w-[300px]'
-                />
-              </div>
               <Menu />
             </div>
           </div>
@@ -41,4 +33,4 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default AdminLayout;
+export default UserLayout;
