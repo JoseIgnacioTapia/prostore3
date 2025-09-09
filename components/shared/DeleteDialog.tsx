@@ -37,6 +37,7 @@ function DeleteDialog({
       } else {
         setOpen(false);
         toast({
+          variant: 'default',
           description: res.message,
         });
       }
