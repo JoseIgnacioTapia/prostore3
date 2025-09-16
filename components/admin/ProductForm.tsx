@@ -1,12 +1,23 @@
 'use client';
 import { useToast } from '@/hooks/use-toast';
-import { productDefaultValues } from '@/lib/constants';
-import { insertProductSchema, updateProductSchema } from '@/lib/validators';
-import { Product } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
-import { Form } from '../ui/form';
+import {
+  Form,
+  FormField,
+  FormControl,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form';
+import { useForm } from 'react-hook-form';
+import slugify from 'slugify';
+import { productDefaultValues } from '@/lib/constants';
+import { insertProductSchema, updateProductSchema } from '@/lib/validators';
+import { Product } from '@/types';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 function ProductForm({
   type,
@@ -34,7 +45,63 @@ function ProductForm({
       <form className='space-y-8'>
         <div className='flex flex-col md:flex-row gap-5'>
           {/* Name */}
+          <FormField
+            control={form.control}
+            name='name'
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<
+                z.infer<typeof insertProductSchema>,
+                'name'
+              >;
+            }) => (
+              <FormItem className='w-full'>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder='Enter product name' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           {/* Slug */}
+          <FormField
+            control={form.control}
+            name='slug'
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<
+                z.infer<typeof insertProductSchema>,
+                'slug'
+              >;
+            }) => (
+              <FormItem className='w-full'>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <div className='relative'>
+                    <Input placeholder='Enter slug' {...field} />
+                    <Button
+                      type='button'
+                      className='bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 mt-2'
+                      onClick={() => {
+                        form.setValue(
+                          'slug',
+                          slugify(form.getValues('name'), {
+                            lower: true,
+                          })
+                        );
+                      }}
+                    >
+                      Generate
+                    </Button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <div className='flex flex-col md:flex-row gap-5'>
           {/* Category */}
